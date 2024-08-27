@@ -12,7 +12,7 @@ const {
   departureTime, 
   maxRetries, 
   emailTo 
-} = require('./config');
+} = require('../config');
 // ★ 여기 선언부 (.utils에서 function 호출부) 까먹지 말자!!
 const { setInputValue, 
     selectDropdownOption, 
