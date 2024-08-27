@@ -1,0 +1,15 @@
+/TicketBuyer_UI
+|-- src/
+|   |-- puppeteerAutomation.js  // Contains the Puppeteer automation script
+|   |-- config.js               // Configuration for Puppeteer and automation parameters
+|   |-- sendMail.js             // Script to send email notifications
+|   |-- utils.js                // Utility functions used by Puppeteer scripts
+|-- ui/
+|   |-- index.html              // Main HTML file for the Electron UI
+|   |-- style.css               // CSS for styling the UI
+|   |-- renderer.js             // Renderer script for handling UI events and IPC communication
+|-- electron.js                 // Main Electron process script
+|-- package.json                // Node.js project configuration
+|-- package-lock.json           // Node.js dependency lock file
+|-- config.js                   // General configuration file (if needed)
+|-- .env                        // Environment variables
