@@ -1,9 +1,9 @@
 {
   "name": "ticketbuyer",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "electron.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "electron ."
   },
   "keywords": [],
   "author": "",
@@ -12,6 +12,7 @@
   "dependencies": {
     "dotenv": "^16.4.5",
     "nodemailer": "^6.9.14",
-    "puppeteer": "^23.1.1"
+    "puppeteer": "^23.1.1",
+    "electron": "^32.0.1"
   }
 }

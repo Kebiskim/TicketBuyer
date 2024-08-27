@@ -1,3 +1,5 @@
+const { ipcRenderer } = require('electron');
+
 const puppeteer = require('puppeteer');
 const { 
   viewportWidth, 
@@ -13,17 +15,23 @@ const {
   emailTo 
 } = require('./config');
 // ★ 여기 선언부 (.utils에서 function 호출부) 까먹지 말자!!
-const { setInputValue, selectDropdownOption, clickElement, clickRadioButtonById, 
-    clickElementByAlt, sendMail, logMessage } = require('./utils');
+const { setInputValue, 
+    selectDropdownOption, 
+    clickElement, 
+    clickRadioButtonById, 
+    clickElementByAlt, 
+    sendMail, 
+    logMessage } = require('./utils');
 
 // Define the sleep function
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
- 
-  
 async function runAutomation() {
+    // Example: Send a log message to renderer process
+    ipcRenderer.send('automation-status', 'Starting Puppeteer automation...');
+
     let browser;
     let page;
 
@@ -159,4 +167,6 @@ async function executeWithRetries(maxAttempts) {
     }
 }
 
-executeWithRetries(3);
+// standalone
+// executeWithRetries(3);
+module.exports = { runAutomation, executeWithRetries };
