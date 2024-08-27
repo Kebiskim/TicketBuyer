@@ -85,9 +85,9 @@ async function runAutomation() {
     while (find_retryCnt < maxRetries) {
         // ※ capcha 나오는 구간 체크해야 함
         // ※ IP를 바꾼다고 해서 (wifi) captcha가 안 나오는 것은 아님
-        // if (find_retryCnt % 2 === 0){
+        if (find_retryCnt % 50 === 0){
             await logMessage('Current ticket find retry count: ' + find_retryCnt);
-        // }
+        }
 
         await page.waitForSelector('#tableResult');
         const rows = await page.$$('#tableResult tr');
@@ -96,7 +96,7 @@ async function runAutomation() {
 
         for (let index = 0; index < rows.length; index++) {
             // Only process the designated rows
-            // if (index > 5) break;
+            // if (index > 2) break;
 
             const row = rows[index];
 
