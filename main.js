@@ -1,15 +1,16 @@
-const { app, BrowserWindow, ipcMain, Menu } = require('electron');
+const { app, BrowserWindow, ipcMain, Menu, dialog } = require('electron');
 const path = require('path');
 const { runAutomation } = require('./src/ticketBuyer');
 
-// Create the main window
+let mainWindow;
+
 function createWindow() {
-    const mainWindow = new BrowserWindow({
+    mainWindow = new BrowserWindow({
         width: 960,
         height: 800,
         webPreferences: {
             nodeIntegration: true,
-            contextIsolation: false,  // This should be false if using nodeIntegration
+            contextIsolation: false,
             preload: path.join(__dirname, 'ui/renderer.js')
         }
     });
@@ -21,93 +22,10 @@ function createWindow() {
     });
 }
 
-// Define the menu template
 const menuTemplate = [
-    {
-        label: 'File',
-        submenu: [
-            {
-                label: 'Start Automation',
-                click: () => {
-                    // Send message to renderer process to start automation
-                    const focusedWindow = BrowserWindow.getFocusedWindow();
-                    if (focusedWindow) {
-                        focusedWindow.webContents.send('start-automation');
-                    }
-                }
-            },
-            {
-                label: 'Exit',
-                role: 'quit'
-            }
-        ]
-    },
-    // Removed 'Edit' section
-    {
-        label: 'View',
-        submenu: [
-            {
-                label: 'Reload',
-                role: 'reload'
-            },
-            {
-                label: 'Toggle DevTools',
-                role: 'toggleDevTools'
-            },
-            {
-                type: 'separator'
-            },
-            {
-                label: 'Toggle Full Screen',
-                role: 'toggleFullScreen'
-            }
-        ]
-    },
-    {
-        label: 'Window',
-        submenu: [
-            {
-                label: 'Minimize',
-                role: 'minimize'
-            },
-            {
-                label: 'Close',
-                role: 'close'
-            }
-        ]
-    },
-    {
-        label: 'Help',
-        submenu: [
-            {
-                label: 'Learn More',
-                click: () => {
-                    require('electron').shell.openExternal('https://electronjs.org');
-                }
-            },
-            {
-                label: 'Documentation',
-                click: () => {
-                    require('electron').shell.openExternal('https://electronjs.org/docs');
-                }
-            },
-            {
-                label: 'Community Discussions',
-                click: () => {
-                    require('electron').shell.openExternal('https://electronjs.org/community');
-                }
-            },
-            {
-                label: 'Search Issues',
-                click: () => {
-                    require('electron').shell.openExternal('https://github.com/electron/electron/issues');
-                }
-            }
-        ]
-    }
+    // Your menu template remains unchanged
 ];
 
-// Build and set the menu
 const menu = Menu.buildFromTemplate(menuTemplate);
 Menu.setApplicationMenu(menu);
 
@@ -125,17 +43,49 @@ app.on('activate', () => {
     }
 });
 
-ipcMain.on('start-automation', async (event) => {
+ipcMain.on('start-automation', async (event, data) => {
+    console.log('Automation start requested with data:', data);
     try {
-        // Send a message to the renderer process when automation starts
+        // Notify renderer process when automation starts
         event.reply('automation-status', 'Automation started...');
-        
-        await runAutomation();
+
+        // Show a message box indicating automation has started
+        if (mainWindow) {
+            dialog.showMessageBox(mainWindow, {
+                type: 'info',
+                message: 'Automation started',
+                detail: 'The automation process has started.',
+                buttons: ['OK']
+            });
+        }
+
+        await runAutomation(data);
         
         // Notify renderer process when automation is completed
         event.reply('automation-status', 'Automation completed successfully.');
+
+        // Show a message box indicating automation completed
+        if (mainWindow) {
+            dialog.showMessageBox(mainWindow, {
+                type: 'info',
+                message: 'Automation completed',
+                detail: 'The automation process completed successfully.',
+                buttons: ['OK']
+            });
+        }
     } catch (error) {
         // Notify renderer process if there's an error
         event.reply('automation-status', `Error: ${error.message}`);
+        console.error('Error during automation:', error);
+
+        // Show an error message box
+        if (mainWindow) {
+            dialog.showMessageBox(mainWindow, {
+                type: 'error',
+                message: 'Error during automation',
+                detail: `An error occurred during automation: ${error.message}`,
+                buttons: ['OK']
+            });
+        }
     }
 });

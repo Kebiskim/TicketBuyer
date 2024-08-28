@@ -1,4 +1,19 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Set the input vars
+    const memberNumberInput = document.getElementById('memberNumber');
+    const passwordInput = document.getElementById('password');
+    const startLocationInput = document.getElementById('startLocation');
+    const endLocationInput = document.getElementById('endLocation');
+    const dateInput = document.getElementById('date');
+    const timeInput = document.getElementById('time');
+    const startAutomationButton = document.getElementById('startAutomationButton');
+
+    // Get references to the custom alert elements
+    const customAlert = document.getElementById('customAlert');
+    const customAlertTitle = document.getElementById('customAlertTitle');
+    const customAlertMessage = document.getElementById('customAlertMessage');
+    const customAlertClose = document.getElementById('customAlertClose');
+
     // Get references to dropdown elements
     const startLocationDropdown = document.getElementById('startLocationDropdown');
     const endLocationDropdown = document.getElementById('endLocationDropdown');
@@ -126,22 +141,22 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    /**
-     * Filters time dropdown items based on the input value.
-* @param {HTMLElement} inputElement - The input field element.
-* @param {HTMLElement} dropdownElement - The dropdown container element.
-* @param {Array} items - Array of time strings to filter.
-*/
-function filterTimeDropdown(inputElement, dropdownElement, items) {
-    inputElement.addEventListener('input', () => {
-    const filter = inputElement.value.toLowerCase(); // Get lowercase filter text
-    const itemsToShow = items.filter(item => item.toLowerCase().includes(filter)); // Filter items
-    const dropdownItems = dropdownElement.querySelectorAll('.dropdown-item');
-    dropdownItems.forEach(item => {
-    item.style.display = itemsToShow.includes(item.textContent) ? 'block' : 'none'; // Show or hide items
-    });
-    });
-    }
+        /**
+         * Filters time dropdown items based on the input value.
+    * @param {HTMLElement} inputElement - The input field element.
+    * @param {HTMLElement} dropdownElement - The dropdown container element.
+    * @param {Array} items - Array of time strings to filter.
+    */
+    function filterTimeDropdown(inputElement, dropdownElement, items) {
+        inputElement.addEventListener('input', () => {
+        const filter = inputElement.value.toLowerCase(); // Get lowercase filter text
+        const itemsToShow = items.filter(item => item.toLowerCase().includes(filter)); // Filter items
+        const dropdownItems = dropdownElement.querySelectorAll('.dropdown-item');
+        dropdownItems.forEach(item => {
+        item.style.display = itemsToShow.includes(item.textContent) ? 'block' : 'none'; // Show or hide items
+        });
+        });
+        }
     
     /**
      * Toggles the visibility of a dropdown when the input field is focused or blurred.
@@ -159,7 +174,61 @@ function filterTimeDropdown(inputElement, dropdownElement, items) {
             }, 200);
         });
     }
-    
+
+    // Function to show the custom alert
+    function showCustomAlert(title, message) {
+        customAlertTitle.textContent = title;
+        customAlertMessage.textContent = message;
+        customAlert.style.display = 'block';
+    }
+
+    // Function to validate form inputs
+    function validateForm() {
+        const memberNumber = memberNumberInput.value.trim();
+        const password = passwordInput.value.trim();
+        const startLocation = startLocationInput.value.trim();
+        const endLocation = endLocationInput.value.trim();
+        const date = dateInput.value.trim();
+        const time = timeInput.value.trim();
+
+        if (!memberNumber || !password || !startLocation || !endLocation || !date || !time) {
+            showCustomAlert('입력 오류', '입력상자 안의 값을 모두 입력하세요.');
+            return false;
+        }
+        return true;
+    }
+
+     // Function to handle the form submission
+     function handleFormSubmit() {
+        console.log('Button clicked');
+        if (validateForm()) {
+            console.log('Form validated');
+            // Send the data to the main process
+            const data = {
+                memberNumber: memberNumberInput.value.trim(),
+                password: passwordInput.value.trim(),
+                startLocation: startLocationInput.value.trim(),
+                endLocation: endLocationInput.value.trim(),
+                dateId: dateInput.value.trim(),
+                departureTime: timeInput.value.trim()
+            };
+            console.log('Sending data:', data);
+            if (window.electron && window.electron.send) {
+                window.electron.send('start-automation', data);
+            } else {
+                console.error('Electron send method not available');
+            }
+        }
+    }
+
+    // Event listener for the custom alert close button
+    customAlertClose.addEventListener('click', () => {
+        customAlert.style.display = 'none';
+    });
+
+    // Event listener for the start automation button
+    startAutomationButton.addEventListener('click', handleFormSubmit);
+
     // Populate dropdowns with location options
     populateDropdown(startLocationDropdown, locations);
     populateDropdown(endLocationDropdown, locations);

@@ -31,6 +31,11 @@ async function sendMail(to, subject, text) {
   }
 }
 
+async function logMessage(message) {
+  console.log(message);
+  // You can also add other logging logic here
+}
+
 // Standalone execution
 // if (require.main === module) {
 //   // Set these values for testing
@@ -41,4 +46,4 @@ async function sendMail(to, subject, text) {
 //   sendMail(testEmail, testSubject, testText).catch(console.error);
 // }
 
-module.exports = sendMail;
+module.exports = { sendMail, logMessage };

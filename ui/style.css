@@ -94,3 +94,55 @@ body {
 .button-container button:hover {
     background-color: #0056b3; /* Darker shade of the button color */
 }
+
+.custom-alert {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 400;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4); /* Black background with opacity */
+}
+
+.custom-alert-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* Centered vertically and horizontally */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 35%; /* Adjust width to 50% of the viewport */
+    max-width: 400px; /* Optional: Set a maximum width for larger screens */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center items horizontally */
+    justify-content: center; /* Center items vertically */
+    text-align: center; /* Center text */
+}
+
+.custom-alert-title {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.custom-alert-message {
+    margin-bottom: 20px;
+}
+
+.custom-alert-close {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.custom-alert-close:hover {
+    background-color: #45a049;
+}

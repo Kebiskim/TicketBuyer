@@ -1,15 +1,9 @@
-const { ipcRenderer } = require('electron');
-const puppeteer = require('puppeteer');
+const { ipcRenderer, ipcMain  } = require('electron');
+const { puppeteer } = require('puppeteer');
 const { 
   viewportWidth, 
   viewportHeight, 
   korailUrl, 
-  memberNumber, 
-  password, 
-  startLocation, 
-  endLocation, 
-  dateId, 
-  departureTime, 
   maxRetries, 
   emailTo 
 } = require('../config');
@@ -27,9 +21,31 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-async function runAutomation() {
+async function runAutomation(data) {
+    const {
+        memberNumber, 
+        password, 
+        startLocation, 
+        endLocation, 
+        dateId, 
+        departureTime 
+    } = data; // Destructure the data object
     // Example: Send a log message to renderer process
     ipcRenderer.send('automation-status', 'Starting Puppeteer automation...');
+
+    await logMessage('Running automation with data:', {
+        viewportWidth, 
+        viewportHeight, 
+        korailUrl, 
+        memberNumber, 
+        password, 
+        startLocation, 
+        endLocation, 
+        dateId, 
+        departureTime, 
+        maxRetries, 
+        emailTo
+    });
 
     let browser;
     let page;
@@ -152,11 +168,12 @@ async function runAutomation() {
 }
 
 // Wrapper function to retry the entire automation
-async function executeWithRetries(maxAttempts) {
+async function executeWithRetries(data, maxAttempts) {
     let attempt = 0;
     while (attempt < maxAttempts) {
         try {
-            await runAutomation();
+            // Pass data to runAutomation
+            await runAutomation(data);
             break; // Exit if successful
         } catch (error) {
             attempt += 1;
@@ -165,6 +182,7 @@ async function executeWithRetries(maxAttempts) {
         }
     }
 }
+
 
 // standalone
 // executeWithRetries(3);
