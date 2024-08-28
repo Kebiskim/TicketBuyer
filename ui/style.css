@@ -1,25 +1,102 @@
-/* ui/style.css */
-
+/* General styles for the body */
 body {
     font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    margin: 0;
+    background-color: #f4f4f4;
+}
+
+/* Container to hold the form elements and button */
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+/* Style for form groups */
+.form-group {
+    margin-bottom: 15px;
+}
+
+/* Style for form labels */
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+/* Style for form inputs and selects */
+.form-group input, .form-group select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* Custom dropdown styles */
+.custom-dropdown {
+    position: relative;
+}
+
+.custom-dropdown .dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 150px; /* Set the maximum height */
+    overflow-y: auto; /* Add vertical scroll if content exceeds max height */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    z-index: 10; /* Ensure dropdown is above other content */
+    display: none; /* Hide dropdown by default */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for dropdown items */
+.dropdown-item {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
     background-color: #f0f0f0;
 }
 
-.container {
-    text-align: center;
+/* Style for button container to center the button */
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
 }
 
-button {
+/* Style for the button */
+#startAutomationButton {
     padding: 10px 20px;
     font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
-#statusMessage {
+/* Button hover effect */
+#startAutomationButton:hover {
+    background-color: #0056b3;
+}
+
+/* Style for status message */
+#status {
     margin-top: 20px;
-    font-weight: bold;
+    font-size: 16px;
 }

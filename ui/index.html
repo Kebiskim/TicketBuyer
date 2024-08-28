@@ -1,12 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>코레일 티켓 예매 프로그램 By.KebiKim</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <button id="startAutomationButton">티켓 예매 시작</button>
+    <div class="container">
+        <div class="form-group">
+            <label for="memberNumber">코레일 회원번호:</label>
+            <input type="text" id="memberNumber" placeholder="회원번호 입력">
+        </div>
+        <div class="form-group">
+            <label for="password">코레일 비밀번호:</label>
+            <input type="password" id="password" placeholder="비밀번호 입력">
+        </div>
+        <div class="form-group custom-dropdown">
+            <label for="startLocation">출발지:</label>
+            <input type="text" id="startLocation" placeholder="출발지 선택 또는 입력">
+            <div id="startLocationDropdown" class="dropdown"></div>
+        </div>
+        <div class="form-group custom-dropdown">
+            <label for="endLocation">도착지:</label>
+            <input type="text" id="endLocation" placeholder="도착지 선택 또는 입력">
+            <div id="endLocationDropdown" class="dropdown"></div>
+        </div>
+        <div class="form-group custom-dropdown">
+            <label for="date">출발 일자:</label>
+            <input type="text" id="date" placeholder="출발 일자 선택 또는 입력">
+            <div id="dateOptions" class="dropdown"></div>
+        </div>
+        <div class="form-group">
+            <label for="time">출발 시간:</label>
+            <select id="time">
+                <option value="">Select Time</option>
+                <!-- Add options here -->
+            </select>
+        </div>
+        <div class="button-container">
+            <button id="startAutomationButton">티켓 예매 시작</button>
+        </div>
+    </div>
     <div id="status"></div>
-    <script src="renderer.js"></script>
+    <script src="options.js"></script>
 </body>
 </html>
