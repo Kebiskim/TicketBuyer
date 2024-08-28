@@ -6,7 +6,7 @@ const { runAutomation } = require('./src/ticketBuyer');
 function createWindow() {
     const mainWindow = new BrowserWindow({
         width: 960,
-        height: 720,
+        height: 800,
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,  // This should be false if using nodeIntegration

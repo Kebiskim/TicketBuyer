@@ -1,102 +1,96 @@
-/* General styles for the body */
+/* General body styling */
 body {
-    font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0;
+    font-family: Arial, sans-serif;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f4f4f4;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 100vh; /* Full viewport height */
+    background-color: #f0f0f0; /* Light gray background */
 }
 
-/* Container to hold the form elements and button */
+/* Container styling */
 .container {
-    display: flex;
-    flex-direction: column;
-    width: 400px;
+    background: #fff; /* White background for the container */
     padding: 20px;
-    background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    position: relative;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    width: 100%; /* Full width of the container */
+    max-width: 600px; /* Maximum width for the container */
 }
 
-/* Style for form groups */
+/* Form group styling */
 .form-group {
     margin-bottom: 15px;
 }
 
-/* Style for form labels */
+/* Label styling */
 .form-group label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
 }
 
-/* Style for form inputs and selects */
-.form-group input, .form-group select {
-    width: 100%;
-    padding: 8px;
+/* Input styling */
+.form-group input[type="text"],
+.form-group input[type="password"],
+.form-group select {
+    width: 100%; /* Full width input fields */
+    padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
 }
 
-/* Custom dropdown styles */
+/* Custom dropdown styling */
 .custom-dropdown {
     position: relative;
 }
 
-.custom-dropdown .dropdown {
+/* Dropdown container styling */
+.dropdown {
     position: absolute;
-    top: 100%;
+    top: 100%; /* Position below the input */
     left: 0;
-    width: 100%;
-    max-height: 150px; /* Set the maximum height */
-    overflow-y: auto; /* Add vertical scroll if content exceeds max height */
-    background-color: #fff;
+    right: 0; /* Match the width of the input */
+    max-height: 200px; /* Limit dropdown height */
+    overflow-y: auto; /* Add vertical scroll if needed */
+    background: #fff;
     border: 1px solid #ddd;
     border-radius: 4px;
-    z-index: 10; /* Ensure dropdown is above other content */
-    display: none; /* Hide dropdown by default */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Ensure dropdown appears above other elements */
+    display: none; /* Hidden by default */
 }
 
-/* Style for dropdown items */
+/* Dropdown item styling */
 .dropdown-item {
-    padding: 8px;
+    padding: 10px;
     cursor: pointer;
 }
 
+/* Highlight on hover */
 .dropdown-item:hover {
-    background-color: #f0f0f0;
+    background: #f0f0f0;
 }
 
-/* Style for button container to center the button */
+/* Button container styling */
 .button-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
+    text-align: center; /* Center-align the button */
 }
 
-/* Style for the button */
-#startAutomationButton {
+/* Button styling */
+.button-container button {
     padding: 10px 20px;
     font-size: 16px;
-    color: #fff;
-    background-color: #007bff;
     border: none;
     border-radius: 4px;
+    background-color: #007bff; /* Bootstrap primary color */
+    color: white;
     cursor: pointer;
 }
 
 /* Button hover effect */
-#startAutomationButton:hover {
-    background-color: #0056b3;
-}
-
-/* Style for status message */
-#status {
-    margin-top: 20px;
-    font-size: 16px;
+.button-container button:hover {
+    background-color: #0056b3; /* Darker shade of the button color */
 }
