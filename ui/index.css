@@ -7,6 +7,7 @@ body {
     align-items: center; /* Center vertically */
     height: 100vh; /* Full viewport height */
     background-color: #f0f0f0; /* Light gray background */
+    overflow: hidden; /* Prevent any page scrolling */
 }
 
 /* Container styling */
@@ -15,13 +16,20 @@ body {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    width: 100%; /* Full width of the container */
-    max-width: 600px; /* Maximum width for the container */
+    width: 90%; /* Use 90% of the viewport width */
+    max-width: 500px; /* Maximum width for larger screens */
+    height: auto; /* Auto height to adjust based on content */
+    max-height: 95%; /* Max height to leave some space around */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Evenly distribute space between elements */
+    box-sizing: border-box; /* Include padding in width and height */
+    overflow-y: auto; /* Add vertical scroll if needed */
 }
 
 /* Form group styling */
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 10px; /* Reduce margin for closer spacing */
 }
 
 /* Label styling */
@@ -36,13 +44,13 @@ body {
 .form-group input[type="password"],
 .form-group select {
     width: 100%; /* Full width input fields */
-    padding: 10px;
+    padding: 8px; /* Slightly reduce padding */
     border: 1px solid #ddd;
     border-radius: 4px;
-    box-sizing: border-box; /* Include padding and border in element's total width and height */
+    box-sizing: border-box; /* Include padding in element's total width and height */
 }
 
-/* Custom dropdown styling */
+/* Dropdown styling */
 .custom-dropdown {
     position: relative;
 }
@@ -53,7 +61,7 @@ body {
     top: 100%; /* Position below the input */
     left: 0;
     right: 0; /* Match the width of the input */
-    max-height: 200px; /* Limit dropdown height */
+    max-height: 150px; /* Reduce dropdown height */
     overflow-y: auto; /* Add vertical scroll if needed */
     background: #fff;
     border: 1px solid #ddd;
@@ -65,7 +73,7 @@ body {
 
 /* Dropdown item styling */
 .dropdown-item {
-    padding: 10px;
+    padding: 8px; /* Slightly reduce padding */
     cursor: pointer;
 }
 
@@ -77,12 +85,13 @@ body {
 /* Button container styling */
 .button-container {
     text-align: center; /* Center-align the button */
+    margin-top: 10px; /* Add some space at the top */
 }
 
 /* Button styling */
 .button-container button {
-    padding: 10px 20px;
-    font-size: 16px;
+    padding: 8px 16px; /* Reduce padding for smaller buttons */
+    font-size: 14px; /* Reduce font size */
     border: none;
     border-radius: 4px;
     background-color: #007bff; /* Bootstrap primary color */
@@ -95,6 +104,7 @@ body {
     background-color: #0056b3; /* Darker shade of the button color */
 }
 
+/* Custom alert styling */
 .custom-alert {
     display: none; /* Hidden by default */
     position: fixed;
@@ -110,10 +120,10 @@ body {
 .custom-alert-content {
     background-color: #fefefe;
     margin: 15% auto; /* Centered vertically and horizontally */
-    padding: 20px;
+    padding: 15px; /* Reduce padding */
     border: 1px solid #888;
-    width: 35%; /* Adjust width to 50% of the viewport */
-    max-width: 400px; /* Optional: Set a maximum width for larger screens */
+    width: 80%; /* Use 80% of the viewport width */
+    max-width: 350px; /* Optional: Set a maximum width for larger screens */
     display: flex;
     flex-direction: column;
     align-items: center; /* Center items horizontally */
@@ -122,23 +132,24 @@ body {
 }
 
 .custom-alert-title {
-    font-size: 1.5em;
-    margin-bottom: 10px;
+    font-size: 1.4em; /* Slightly reduce font size */
+    margin-bottom: 8px; /* Reduce margin */
 }
 
 .custom-alert-message {
-    margin-bottom: 20px;
+    font-size: 0.8em;
+    margin-bottom: 15px; /* Reduce margin */
 }
 
 .custom-alert-close {
     background-color: #4CAF50;
     color: white;
     border: none;
-    padding: 10px 20px;
+    padding: 8px 16px; /* Reduce padding */
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: 14px; /* Reduce font size */
     margin: 4px 2px;
     cursor: pointer;
 }

@@ -2,9 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Prevent zooming by setting user-scalable=no and fixing maximum and minimum scale -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <title>코레일 티켓 예매 프로그램 By.KebiKim</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="index.css">
+
+    <script>
+        // Function to resize the window
+        function resizeWindow() {
+            // Set the width and height you want for your window (in pixels)
+            window.resizeTo(320, 580);  
+    
+            // Optional: center the window on screen
+            window.moveTo(
+                (screen.width - window.outerWidth) / 2,
+                (screen.height - window.outerHeight) / 2
+            );
+        }
+    
+        // Call the function when the window loads
+        window.onload = resizeWindow;
+    </script>
+    
 </head>
 <body>
     <div class="container">

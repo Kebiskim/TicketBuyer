@@ -175,59 +175,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Function to show the custom alert
-    function showCustomAlert(title, message) {
-        customAlertTitle.textContent = title;
-        customAlertMessage.textContent = message;
-        customAlert.style.display = 'block';
-    }
-
-    // Function to validate form inputs
-    function validateForm() {
-        const memberNumber = memberNumberInput.value.trim();
-        const password = passwordInput.value.trim();
-        const startLocation = startLocationInput.value.trim();
-        const endLocation = endLocationInput.value.trim();
-        const date = dateInput.value.trim();
-        const time = timeInput.value.trim();
-
-        if (!memberNumber || !password || !startLocation || !endLocation || !date || !time) {
-            showCustomAlert('입력 오류', '입력상자 안의 값을 모두 입력하세요.');
-            return false;
-        }
-        return true;
-    }
-
-     // Function to handle the form submission
-     function handleFormSubmit() {
-        console.log('Button clicked');
-        if (validateForm()) {
-            console.log('Form validated');
-            // Send the data to the main process
-            const data = {
-                memberNumber: memberNumberInput.value.trim(),
-                password: passwordInput.value.trim(),
-                startLocation: startLocationInput.value.trim(),
-                endLocation: endLocationInput.value.trim(),
-                dateId: dateInput.value.trim(),
-                departureTime: timeInput.value.trim()
-            };
-            console.log('Sending data:', data);
-            if (window.electron && window.electron.send) {
-                window.electron.send('start-automation', data);
-            } else {
-                console.error('Electron send method not available');
-            }
-        }
-    }
-
     // Event listener for the custom alert close button
     customAlertClose.addEventListener('click', () => {
         customAlert.style.display = 'none';
     });
-
-    // Event listener for the start automation button
-    startAutomationButton.addEventListener('click', handleFormSubmit);
 
     // Populate dropdowns with location options
     populateDropdown(startLocationDropdown, locations);
