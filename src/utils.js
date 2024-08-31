@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer');
 require('dotenv').config(); // 환경 변수 로드
+const { ipcRenderer } = require('electron');
 
 /**
  * Sends an email using the configured transporter.
@@ -33,17 +34,7 @@ async function sendMail(to, subject, text) {
 
 async function logMessage(message) {
   console.log(message);
-  // You can also add other logging logic here
+  ipcRenderer.send('log-message', message);
 }
-
-// Standalone execution
-// if (require.main === module) {
-//   // Set these values for testing
-//   const testEmail = process.env.EMAIL_TO || 'recipient@example.com';
-//   const testSubject = 'Test Email Subject';
-//   const testText = 'This is a test email body.';
-
-//   sendMail(testEmail, testSubject, testText).catch(console.error);
-// }
 
 module.exports = { sendMail, logMessage };

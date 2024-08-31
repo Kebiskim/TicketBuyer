@@ -1,5 +1,6 @@
 console.log('ticketBuyer script loaded');
 const puppeteer = require('puppeteer');
+
 const { 
   viewportWidth, 
   viewportHeight, 
@@ -7,9 +8,11 @@ const {
   maxRetries, 
   emailTo 
 } = require('../config');
+const { sendMail, logMessage 
+} = require('./utils');
 const { setInputValue, selectDropdownOption, 
-    clickElement, clickRadioButtonById, clickElementByAlt, 
-    sendMail, logMessage } = require('./utils');
+    clickElement, clickRadioButtonById, clickElementByAlt
+} = require('./actions');
 
 // Define the sleep function
 function sleep(ms) {
@@ -18,16 +21,9 @@ function sleep(ms) {
 
 // Main function for running automation
 async function runAutomation(data) {
-    const {
-        memberNumber, 
-        password, 
-        startLocation, 
-        endLocation, 
-        dateId, 
-        departureTime 
-    } = data; // Destructure the data object
+    const { memberNumber, password, startLocation, endLocation, dateId, departureTime } = data;
 
-    await logMessage('Running automation with data:', {
+    await logMessage('[ticketBuyer.js, runAutomation] Running automation with data:', {
         viewportWidth, 
         viewportHeight, 
         korailUrl, 
@@ -64,6 +60,8 @@ async function runAutomation(data) {
         await page.waitForNavigation();
         await logMessage('Login Success');
 
+        await page.goto('https://www.letskorail.com/ebizprd/prdMain.do'); 
+
         // Set start and end locations
         await setInputValue(page, '#txtGoStart', startLocation);
         await setInputValue(page, '#txtGoEnd', endLocation);
@@ -71,19 +69,25 @@ async function runAutomation(data) {
         // Click calendar popup
         await clickElement(page, '[title="달력 팝업창이 뜹니다."]');
 
-        // Handle the popup window
+        // Select the date on popup
         const pages = await browser.pages();
         const popupPage = pages[pages.length - 1];
-        await popupPage.waitForSelector(`#${dateId}`);
-        await popupPage.click(`#${dateId}`);
+        
+        // dateId를 dYYYYMMDD 형식으로 변환
+        const formattedDateId = `d${dateId.replace(/-/g, '')}`;
+        
+        await popupPage.waitForSelector(`#${formattedDateId}`);
+        await popupPage.click(`#${formattedDateId}`);
 
         await logMessage('Date selection successful: ' + dateId);
 
         // Switch back to main page
         await page.bringToFront();
+        await logMessage('Moved to main page');
 
         // Select departure time and train type
         await selectDropdownOption(page, '[title="출발일시:시"]', departureTime);
+        await logMessage('Selected Departure Time:' + departureTime);
 
         // Click search button
         await clickElement(page, '[alt="승차권예매"]');
@@ -140,8 +144,8 @@ async function runAutomation(data) {
                 await logMessage('티켓 예매 성공');
                 await sendMail(
                     emailTo,
-                    'Korail Ticket Reserved Notification',
-                    'A Ticket purchase has been done successfully.'
+                    '코레일 티켓 예매 성공 메일',
+                    '티켓 구매가 성공적으로 완료되었습니다.'
                 );
                 break;
             }
@@ -160,8 +164,20 @@ async function runAutomation(data) {
     }
 }
 
-// Wrapper function to retry the entire automation
+/**
+ * Retries the automation process up to a specified number of attempts.
+ * This function will attempt to run the automation and handle any errors by retrying.
+ *
+ * @async
+ * @function executeWithRetries
+ * @param {Object} data - The data required for automation, including member number, password, and other settings.
+ * @param {number} maxAttempts - The maximum number of attempts to retry the automation.
+ * @returns {Promise<void>} A promise that resolves when the automation completes successfully or when max attempts are reached.
+ */
 async function executeWithRetries(data, maxAttempts) {
+    console.log('work starts from ticketBuyer.js')
+    console.log('[ticketBuyer.js, executeWithRetries] Automation start requested with data:', data);
+
     let attempt = 0;
     while (attempt < maxAttempts) {
         try {
@@ -175,4 +191,4 @@ async function executeWithRetries(data, maxAttempts) {
     }
 }
 
-module.exports = { runAutomation, executeWithRetries };
+module.exports = { executeWithRetries };
