@@ -130,7 +130,7 @@ async function runAutomation(data) {
                         if (td) {
                             const img = td.querySelector('img');
                             if (img) {
-                                img.click();
+                                // img.click();
                             }
                         }
                     }, row);
@@ -142,11 +142,12 @@ async function runAutomation(data) {
 
             if (imageClicked) {
                 await logMessage('티켓 예매 성공');
-                await sendMail(
-                    emailTo,
-                    '코레일 티켓 예매 성공 메일',
-                    '티켓 구매가 성공적으로 완료되었습니다.'
-                );
+                // ★ TEST
+                // await sendMail(
+                //     emailTo,
+                //     '코레일 티켓 예매 성공 메일',
+                //     '티켓 구매가 성공적으로 완료되었습니다.'
+                // );
                 break;
             }
 

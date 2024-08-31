@@ -1,22 +1,29 @@
 {
-  "name": "ticketbuyer_ui_2",
+  "name": "코레일 취소표 예매 프로그램",
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "electron-builder"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["electron", "puppeteer", "automation", "ticket"],
+  "author": "KebisKim",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^32.0.1"
+    "electron": "^32.0.1",
+    "electron-builder": "^23.0.0"
   },
+  "description": "An Electron application for automating ticket purchases using Puppeteer.",
   "dependencies": {
     "dotenv": "^16.4.5",
     "iconv-lite": "^0.6.3",
     "nodemailer": "^6.9.14",
     "puppeteer": "^23.2.1"
   },
-  "description": ""
+  "build": {
+    "files": [
+      "./ui/preload.js"
+    ]   
+  }
 }
