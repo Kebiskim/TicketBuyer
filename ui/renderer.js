@@ -27,7 +27,7 @@ document.getElementById("startAutomationButton").addEventListener("click", funct
     // }
     const data = {
         memberNumber: '1041537669',
-        password: 'Dusdn067^^',
+        password: '',
         startLocation: '서울',
         endLocation: '부산',
         dateId: '2024-09-01',
