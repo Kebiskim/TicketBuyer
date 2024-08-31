@@ -1,16 +1,22 @@
-console.log('ongoing.js loaded');
+console.log('[ongoing.js] loaded');
+const { ipcRenderer } = window.electron;
 
 document.addEventListener('DOMContentLoaded', () => {
     const logArea = document.getElementById('logArea');
     const stopAutomationButton = document.getElementById('stopAutomationButton');
 
     // 로그 메시지 수신 및 표시
-    window.electron.ipcRenderer.on('log', (message) => {
+    ipcRenderer.on('log', (event, message) => {
         if (logArea) {
+            console.log('log message received:', message); // 메시지 수신 확인
+            console.log('logArea exists, appending message'); // logArea 존재 확인
             logArea.value += message + '\n';
+            console.log('Updated logArea value:', logArea.value); // 업데이트된 값 확인
+        } else {
+            console.error('logArea not found'); // logArea가 존재하지 않는 경우
         }
     });
-
+    
     // '작업 중지' 버튼 클릭 이벤트 처리
     if (stopAutomationButton) {
         stopAutomationButton.addEventListener('click', () => {
@@ -23,3 +29,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+

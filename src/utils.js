@@ -39,11 +39,11 @@ async function sendMail(to, subject, text) {
 
 async function logMessage(message) {
   console.log(message);
-  if (typeof window !== 'undefined' && window.electron && window.electron.ipcRenderer) {
-    window.electron.ipcRenderer.send('log-message', message);
-  } else {
-    console.error('ipcRenderer is undefined or not in renderer process');
-  }
+  // if (typeof window !== 'undefined' && window.electron && window.electron.ipcRenderer) {
+  //   window.electron.ipcRenderer.send('log-message', message);
+  // } else {
+  //   console.error('ipcRenderer is undefined or not in renderer process');
+  // }
 }
 
 module.exports = { logMessage };

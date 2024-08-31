@@ -1,6 +1,8 @@
 const { app, BrowserWindow, ipcMain, Menu, dialog } = require('electron');
 const path = require('path');
 const { executeWithRetries } = require('./src/ticketBuyer');
+const { setMainWindow, getMainWindow } = require('./ui/windowManager');
+
 // global.__static = path.join(__dirname, 'static').replace(/\\/g, '\\\\');
 
 let mainWindow;  // Declare `mainWindow` globally to access in IPC events
@@ -16,6 +18,7 @@ function createWindow() {
             preload: path.resolve('C:/Coding/TickeyBuyer_FuncAdded/ui/preload.js'),
 
             // preload 못 불러오는 이슈 아래 주석을 통해 해결!
+            // static 도 안 먹음.. 
             // contextIsolation: false, // No isolation between contexts
             // nodeIntegration을 활성화하면 보안 문제가 발생할 수 있으므로, 
             // 필요에 따라 contextIsolation을 false로 설정하여 Node.js API를 사용할 수 있도록 합니다.
@@ -27,18 +30,16 @@ function createWindow() {
     // ★ TEST
     mainWindow.webContents.openDevTools();
 
-      // 로그 메시지를 렌더러 프로세스로 전달
-    ipcMain.on('log-message', (event, message) => {
-        mainWindow.webContents.send('log', message);
+    mainWindow.webContents.on('did-finish-load', () => {
+        console.log('App Window loaded.');
+        mainWindow.webContents.send('log', 'Chrome이 실행되었습니다.');
     });
 
-    // mainWindow.webContents.on('did-finish-load', () => {
-    //     console.log('App Window loaded.');
-    //     mainWindow.webContents.send('log', 'Chrome이 실행되었습니다.');
-    // });
+    // Set the mainWindow instance in windowManager
+    setMainWindow(mainWindow);
 }
 
-// Setup menu if needed
+// Setup menu
 const menuTemplate = [/* Your menu template */];
 const menu = Menu.buildFromTemplate(menuTemplate);
 Menu.setApplicationMenu(menu);
@@ -63,7 +64,7 @@ app.on('activate', () => {
 ipcMain.on('start-automation', async (event, data) => {
     console.log('[main.js] Automation start requested with data:', data);
     try {
-        // Pass data to runAutomation
+        const mainWindow = getMainWindow();
         await executeWithRetries(data, 3);
 
         // Show a message box indicating automation completed

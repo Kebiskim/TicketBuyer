@@ -1,5 +1,6 @@
 console.log('ticketBuyer script loaded');
 const puppeteer = require('puppeteer');
+const { getMainWindow } = require('../ui/windowManager');
 
 const { 
   viewportWidth, 
@@ -19,29 +20,50 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+// Wait for mainWindow to be defined
+async function waitForMainWindow() {
+    return new Promise((resolve, reject) => {
+        const checkInterval = setInterval(() => {
+            const mainWindow = getMainWindow();
+            if (mainWindow && mainWindow.webContents) {
+                clearInterval(checkInterval);
+                resolve(mainWindow);
+            }
+        }, 100);
+
+        setTimeout(() => {
+            clearInterval(checkInterval);
+            reject(new Error('mainWindow is not defined.'));
+        }, 5000); // 5초 후에 타임아웃
+    });
+}
+
 // Main function for running automation
 async function runAutomation(data) {
     const { memberNumber, password, startLocation, endLocation, dateId, departureTime } = data;
 
-    await logMessage('[ticketBuyer.js, runAutomation] Running automation with data:', {
-        viewportWidth, 
-        viewportHeight, 
-        korailUrl, 
-        memberNumber, 
-        password, 
-        startLocation, 
-        endLocation, 
-        dateId, 
-        departureTime, 
-        maxRetries, 
-        emailTo
-    });
+    // await logMessage('[ticketBuyer.js, runAutomation] Running automation with data:', {
+    //     viewportWidth, 
+    //     viewportHeight, 
+    //     korailUrl, 
+    //     memberNumber, 
+    //     password, 
+    //     startLocation, 
+    //     endLocation, 
+    //     dateId, 
+    //     departureTime, 
+    //     maxRetries, 
+    //     emailTo
+    // });
 
     let browser;
     let page;
 
     try {
         await logMessage('***** Start Process *****');
+        const mainWindow = await waitForMainWindow();
+        mainWindow.webContents.send('log', '코레일 예약 작업을 시작합니다.');
+
         browser = await puppeteer.launch({ headless: false });
         page = await browser.newPage();
 
@@ -59,12 +81,14 @@ async function runAutomation(data) {
         await clickElement(page, 'li.btn_login');
         await page.waitForNavigation();
         await logMessage('Login Success');
+        mainWindow.webContents.send('log', '로그인 성공');
 
         await page.goto('https://www.letskorail.com/ebizprd/prdMain.do'); 
 
         // Set start and end locations
         await setInputValue(page, '#txtGoStart', startLocation);
         await setInputValue(page, '#txtGoEnd', endLocation);
+        mainWindow.webContents.send('log', '목적지 입력 성공: ' + startLocation + ' -> ' + endLocation);
 
         // Click calendar popup
         await clickElement(page, '[title="달력 팝업창이 뜹니다."]');
@@ -79,15 +103,16 @@ async function runAutomation(data) {
         await popupPage.waitForSelector(`#${formattedDateId}`);
         await popupPage.click(`#${formattedDateId}`);
 
-        await logMessage('Date selection successful: ' + dateId);
+        await logMessage('Date selected: ' + dateId);
+        mainWindow.webContents.send('log', '날짜 입력 성공' + dateId);
 
-        // Switch back to main page
         await page.bringToFront();
         await logMessage('Moved to main page');
 
         // Select departure time and train type
         await selectDropdownOption(page, '[title="출발일시:시"]', departureTime);
-        await logMessage('Selected Departure Time:' + departureTime);
+        await logMessage('Selected Departure Time: ' + departureTime);
+        mainWindow.webContents.send('log', '출발시간: ' + departureTime);
 
         // Click search button
         await clickElement(page, '[alt="승차권예매"]');
@@ -97,6 +122,7 @@ async function runAutomation(data) {
         await clickElementByAlt(page, '조회하기');
 
         await logMessage('=== Start finding an available seat ===');
+        mainWindow.webContents.send('log', '가능한 좌석이 있는지 확인합니다.');
 
         // Start the retry loop
         let find_retryCnt = 0;
@@ -130,6 +156,11 @@ async function runAutomation(data) {
                         if (td) {
                             const img = td.querySelector('img');
                             if (img) {
+
+                                setTimeout(() => {
+                                    console.log('60 seconds have passed.');
+                                }, 60000);
+                                // ★ TEST
                                 // img.click();
                             }
                         }
@@ -176,8 +207,8 @@ async function runAutomation(data) {
  * @returns {Promise<void>} A promise that resolves when the automation completes successfully or when max attempts are reached.
  */
 async function executeWithRetries(data, maxAttempts) {
-    console.log('work starts from ticketBuyer.js')
-    console.log('[ticketBuyer.js, executeWithRetries] Automation start requested with data:', data);
+    // console.log('work starts from ticketBuyer.js')
+    // console.log('[ticketBuyer.js, executeWithRetries] Automation start requested with data:', data);
 
     let attempt = 0;
     while (attempt < maxAttempts) {
