@@ -1,0 +1,153 @@
+/* General body styling */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 100vh; /* Full viewport hei2ght */
+    background-color: #f0f0f0; /* Light gray background */
+    overflow: hidden; /* Prevent any page scrolling */
+}
+
+/* Container styling */
+.container {
+    background: #fff; /* White background for the container */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    width: 90%; /* Use 90% of the viewport width */
+    max-width: auto; /* Maximum width for larger screens */
+    height: auto; /* Auto hei2ght to adjust based on content */
+    max-height: 90%; /* Max hei2ght to leave some space around */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Evenly distribute space between elements */
+    box-sizing: border-box; /* Include padding in width and height */
+    overflow-y: auto; /* Add vertical scroll if needed */
+}
+
+/* Form group styling */
+.form-group {
+    margin-bottom: 10px; /* Reduce margin for closer spacing */
+}
+
+/* Label styling */
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+/* Input styling */
+.form-group input[type="text"],
+.form-group input[type="password"],
+.form-group select {
+    width: 100%; /* Full width input fields */
+    padding: 8px; /* Slightly reduce padding */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box; /* Include padding in element's total width and height */
+}
+
+/* Dropdown styling */
+.custom-dropdown {
+    position: relative;
+}
+
+/* Dropdown container styling */
+.dropdown {
+    position: absolute;
+    top: 100%; /* Position below the input */
+    left: 0;
+    right: 0; /* Match the width of the input */
+    max-height: 150px; /* Reduce dropdown height */
+    overflow-y: auto; /* Add vertical scroll if needed */
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Ensure dropdown appears above other elements */
+    display: none; /* Hidden by default */
+}
+
+/* Dropdown item styling */
+.dropdown-item {
+    padding: 8px; /* Slightly reduce padding */
+    cursor: pointer;
+}
+
+/* Highlight on hover */
+.dropdown-item:hover {
+    background: #f0f0f0;
+}
+
+/* Button container styling */
+.button-container {
+    text-align: center; /* Center-align the button */
+    margin-top: 40px; /* Add some space at the top */
+    margin-bottom: 55px; /* Add some space at the top */
+}
+
+/* Button styling */
+.button-container button {
+    padding: 12px 16px; /* 버튼의 높이를 증가시키기 위해 패딩을 12px로 설정 */
+    font-size: 14px; /* Reduce font size */
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff; /* Bootstrap primary color */
+    color: white;
+    cursor: pointer;
+}
+
+/* Button hover effect */
+.button-container button:hover {
+    background-color: #0056b3; /* Darker shade of the button color */
+}
+
+
+/* Custom Alert Styles */
+.custom-alert {
+    display: none; /* Hide by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Ensure it is above other elements */
+  }
+  
+  .custom-alert-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    width: 80%;
+    max-width: 400px;
+  }
+  
+  .custom-alert-title {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .custom-alert-message {
+    margin: 10px 0;
+  }
+  
+  .custom-alert-close {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .custom-alert-close:hover {
+    background-color: #0056b3;
+  }
+  
