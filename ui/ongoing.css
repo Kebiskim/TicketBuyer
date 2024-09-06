@@ -5,7 +5,7 @@ body {
     display: flex;
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
-    height: 125vh; /* Full viewport height */
+    height: 100vh; /* Full viewport height */
     background-color: #f0f0f0; /* Light gray background */
     overflow: hidden; /* Prevent any page scrolling */
 }
@@ -19,12 +19,12 @@ body {
     width: 90%; /* Use 90% of the viewport width */
     max-width: 500px; /* Maximum width for larger screens */
     height: auto; /* Auto height to adjust based on content */
-    max-height: 100vh; /* Maximum hei2ght to leave some space around */
+    max-height: 100vh; /* Maximum height to leave some space around */
     display: flex;
     flex-direction: column;
     justify-content: space-between; /* Distribute space evenly */
-    box-sizing: border-box; /* Include padding in width and hei2ght */
-}2
+    box-sizing: border-box; /* Include padding in width and height */
+}
 
 /* Heading styling */
 .container h2 {
@@ -33,11 +33,33 @@ body {
     margin-bottom: 20px; /* Space below the heading */
 }
 
+/* Input display container styling */
+.input-display-container {
+    width: 100%;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.input-display-container label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+#inputDisplay {
+    width: 100%;
+    padding: 10px;
+    font-size: 12px;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
 /* Textarea styling */
 #logArea {
     width: 100%; /* Full width textarea */
     height: 300px;
     padding: 10px;
+    font-size: 12px;
     border: 1px solid #ddd;
     border-radius: 4px;
     box-sizing: border-box; /* Include padding in width */
@@ -45,6 +67,27 @@ body {
     overflow-y: auto; /* Allow vertical scrolling */
     font-family: monospace; /* Monospaced font for logs */
     margin-bottom: 20px; /* Space below the textarea */
+}
+
+#inputDisplayArea {
+    width: 100%; /* Full width textarea */
+    font-size: 11px;
+    height: 100px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box; /* Include padding in width */
+    resize: none; /* Disable resizing */
+    overflow-y: auto; /* Allow vertical scrolling */
+    font-family: monospace; /* Monospaced font for logs */
+    margin-bottom: 5px; /* Space below the textarea */
+
+    border: none; /* 바깥 선 제거 */
+    font-weight: bold; /* 글씨 굵게 */
+    cursor: default; /* 클릭 시 마우스 커서 변화 없음 */
+    pointer-events: none; /* 클릭 불가능하게 설정 */
+    outline: none; /* 클릭 시 포커스 외곽선 제거 */
+    overflow: hidden; /* 스크롤 숨기기 */
 }
 
 /* Button container styling */

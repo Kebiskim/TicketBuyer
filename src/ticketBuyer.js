@@ -51,11 +51,18 @@ async function runAutomation(data) {
     try {
         await logMessage('***** Start Process *****');
         const mainWindow = await waitForMainWindow();
+        mainWindow.webContents.send('info', memberNumber + '님 환영합니다.');
+        mainWindow.webContents.send('info', '출발역은 ' + startLocation + '입니다.');
+        mainWindow.webContents.send('info', '도착역은 ' + endLocation + '입니다.');
+        mainWindow.webContents.send('info', '출발일은 ' + date + '입니다.');
+        mainWindow.webContents.send('info', '출발시간은 ' + time + '입니다.');
+
         mainWindow.webContents.send('log', '코레일 예약 작업을 시작합니다.');
 
         // ★ TEST
         browser = await puppeteer.launch({ headless: false });
         page = await browser.newPage();
+        mainWindow.webContents.send('log', 'Chrome이 실행되었습니다.');
 
         // Set viewport size
         await page.setViewport({ width: viewportWidth, height: viewportHeight });

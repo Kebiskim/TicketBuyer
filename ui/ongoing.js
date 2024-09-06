@@ -16,7 +16,17 @@ document.addEventListener('DOMContentLoaded', () => {
             // console.error('logArea not found'); // logArea가 존재하지 않는 경우
         }
     });
-    
+
+    // 입력받은 작업 정보 메시지 수신 및 표시 (info 용)
+    ipcRenderer.on('info', (event, message) => {
+        const inputDisplayArea = document.getElementById('inputDisplayArea');  // info용 텍스트 영역 ID
+        if (inputDisplayArea) {
+            inputDisplayArea.value += message + '\n';
+        } else {
+            console.error('inputDisplayArea not found');
+        }
+    });
+        
     // '작업 중지' 버튼 클릭 이벤트 처리
     if (stopAutomationButton) {
         stopAutomationButton.addEventListener('click', () => {

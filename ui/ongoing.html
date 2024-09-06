@@ -8,7 +8,11 @@
 </head>
 <body>
     <div class="container">
-        <h2>자동화 수행중...</h2>
+        <div class="input-display-container">
+            <label for="inputDisplay">자동화 진행 정보</label>
+            <textarea id="inputDisplayArea" rows="10" cols="20" readonly></textarea>
+        </div>
+        <h2>자동화 수행로그</h2>
         <textarea id="logArea" rows="10" cols="50" readonly></textarea>
         <div class="button-container">
             <button id="stopAutomationButton" class="stop-button">작업 중지</button>

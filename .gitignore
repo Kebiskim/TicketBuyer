@@ -26,9 +26,3 @@ Thumbs.db
 *.tgz
 *.zip
 *.tar.gz
-
-# Test coverage directory
-coverage/
-
-# Local configuration files
-*.local

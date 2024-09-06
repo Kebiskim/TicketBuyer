@@ -28,14 +28,15 @@ function createWindow() {
             nodeIntegration: true // Allow renderer to use Node.js APIs
         }
     });
+    // ★ TEST
     mainWindow.loadFile(path.join(__dirname, './ui/index.html'));
+    // mainWindow.loadFile(path.join(__dirname, './ui/ongoing.html'));
 
     // ★ TEST (DevTools 창 열기)
     // mainWindow.webContents.openDevTools();
 
     mainWindow.webContents.on('did-finish-load', () => {
         console.log('[main.js] App Window loaded.');
-        mainWindow.webContents.send('log', 'Chrome이 실행되었습니다.');
     });
 
     // Set the mainWindow instance in windowManager
